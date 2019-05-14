@@ -130,18 +130,22 @@ export default {
       const w = this.useAutoSizing ? this.realWidth : this.width
 
       // HACK
-      return this.naturalWidth
+      if (this.naturalWidth) {
+        return this.naturalWidth
+      }
 
-      // return w * this.quality
+      return w * this.quality
     },
 
     outputHeight () {
       const h = this.useAutoSizing ? this.realHeight : this.height
 
       // HACK
-      return this.naturalWidth / this.width * this.height
+      if (this.naturalWidth) {
+        return this.naturalWidth / this.width * this.height
+      }
 
-      // return h * this.quality
+      return h * this.quality
     },
 
     computedPlaceholderFontSize () {
