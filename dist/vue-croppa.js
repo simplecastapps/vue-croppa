@@ -560,50 +560,20 @@ var component = { render: function render() {
     outputWidth: function outputWidth() {
       var w = this.useAutoSizing ? this.realWidth : this.width;
 
-      // const canvasRatio = this.width / this.height
-      console.log(this.aspectRatio);
-      console.log('width: ', this.width, 'height: ', this.height);
-      console.log('natural width: ', this.naturalWidth, 'natural height: ', this.naturalHeight);
-      // 3142 / (400/700)
-      // const scaleRatio = imgHeight / this.outputHeight
-
-      return this.naturalWidth;
-
-      // return this.naturalWidth < this.width ? this.width : this.naturalWidth
-
-      // if (this.naturalWidth > this.naturalHeight) {
-      //   // Landscape
-      //   // scale the width
-      //   // return this.naturalWidth < this.width ? this.width : this.naturalWidth
-      // } else if (this.naturalWidth < this.naturalHeight) {
-      //   // Portrait
-      //   return this.naturalWidth < this.width ? this.width : this.naturalWidth
-      // } else {
-      //   return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight
-      // }
+      // HACK
+      if (this.naturalWidth > this.width) {
+        return this.naturalWidth;
+      }
 
       return w * this.quality;
     },
     outputHeight: function outputHeight() {
       var h = this.useAutoSizing ? this.realHeight : this.height;
 
-      // const canvasRatio = this.width / this.height
-
-      // if (this.naturalWidth > this.naturalHeight) {
-      //   // Landscape
-      //   // scale the width
-      //   // return this.naturalWidth < this.width ? this.width : this.naturalWidth
-      // } else if (this.naturalWidth < this.naturalHeight) {
-      //   // Portrait
-      //   return this.naturalWidth < this.width ? this.width : this.naturalWidth
-      // } else {
-      //   return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight
-      // }
-
-      // return this.height
-      // return this.naturalHeight < this.height ? this.height : this.naturlHeight
-      //
-      return this.naturalWidth / this.width * this.height;
+      // HACK
+      if (this.naturalWidth > this.width) {
+        return this.naturalWidth / this.width * this.height;
+      }
 
       return h * this.quality;
     },
