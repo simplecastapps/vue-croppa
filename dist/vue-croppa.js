@@ -560,20 +560,50 @@ var component = { render: function render() {
     outputWidth: function outputWidth() {
       var w = this.useAutoSizing ? this.realWidth : this.width;
 
-      // HACK FOR NOW.  THIS IS ASSUMING A 1-TO-1 RATIO
-      if (this.naturalWidth > this.width || this.naturalHeight > this.height) {
-        return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight;
-      }
+      // const canvasRatio = this.width / this.height
+      console.log(this.aspectRatio);
+      console.log('width: ', this.width, 'height: ', this.height);
+      console.log('natural width: ', this.naturalWidth, 'natural height: ', this.naturalHeight);
+      // 3142 / (400/700)
+      // const scaleRatio = imgHeight / this.outputHeight
+
+      return this.naturalWidth;
+
+      // return this.naturalWidth < this.width ? this.width : this.naturalWidth
+
+      // if (this.naturalWidth > this.naturalHeight) {
+      //   // Landscape
+      //   // scale the width
+      //   // return this.naturalWidth < this.width ? this.width : this.naturalWidth
+      // } else if (this.naturalWidth < this.naturalHeight) {
+      //   // Portrait
+      //   return this.naturalWidth < this.width ? this.width : this.naturalWidth
+      // } else {
+      //   return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight
+      // }
 
       return w * this.quality;
     },
     outputHeight: function outputHeight() {
       var h = this.useAutoSizing ? this.realHeight : this.height;
 
-      // HACK FOR NOW.  THIS IS ASSUMING A 1-TO-1 RATIO
-      if (this.naturalHeight > this.height || this.naturalWidth > this.width) {
-        return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight;
-      }
+      // const canvasRatio = this.width / this.height
+
+      // if (this.naturalWidth > this.naturalHeight) {
+      //   // Landscape
+      //   // scale the width
+      //   // return this.naturalWidth < this.width ? this.width : this.naturalWidth
+      // } else if (this.naturalWidth < this.naturalHeight) {
+      //   // Portrait
+      //   return this.naturalWidth < this.width ? this.width : this.naturalWidth
+      // } else {
+      //   return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight
+      // }
+
+      // return this.height
+      // return this.naturalHeight < this.height ? this.height : this.naturlHeight
+      //
+      return this.naturalWidth / this.width * this.height;
 
       return h * this.quality;
     },
@@ -869,6 +899,7 @@ var component = { render: function render() {
         callback(null);
         return;
       }
+      console.log(this.canvas);
       this.canvas.toBlob(callback, mimeType, qualityArgument);
     },
     promisedBlob: function promisedBlob() {

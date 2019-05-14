@@ -129,23 +129,19 @@ export default {
     outputWidth () {
       const w = this.useAutoSizing ? this.realWidth : this.width
 
-      // HACK FOR NOW.  THIS IS ASSUMING A 1-TO-1 RATIO
-      if (this.naturalWidth > this.width || this.naturalHeight > this.height) {
-        return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight
-      }
+      // HACK
+      return this.naturalWidth
 
-      return w * this.quality
+      // return w * this.quality
     },
 
     outputHeight () {
       const h = this.useAutoSizing ? this.realHeight : this.height
 
-      // HACK FOR NOW.  THIS IS ASSUMING A 1-TO-1 RATIO
-      if (this.naturalHeight > this.height || this.naturalWidth > this.width) {
-        return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight
-      }
+      // HACK
+      return this.naturalWidth / this.width * this.height
 
-      return h * this.quality
+      // return h * this.quality
     },
 
     computedPlaceholderFontSize () {
@@ -444,6 +440,7 @@ export default {
         callback(null)
         return
       }
+      console.log(this.canvas)
       this.canvas.toBlob(callback, mimeType, qualityArgument)
     },
 
