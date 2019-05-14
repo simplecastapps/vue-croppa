@@ -2,7 +2,7 @@
  * vue-croppa v1.3.8
  * https://github.com/zhanziyang/vue-croppa
  * 
- * Copyright (c) 2018 zhanziyang
+ * Copyright (c) 2019 zhanziyang
  * Released under the ISC license
  */
   
@@ -559,10 +559,22 @@ var component = { render: function render() {
   computed: {
     outputWidth: function outputWidth() {
       var w = this.useAutoSizing ? this.realWidth : this.width;
+
+      // HACK FOR NOW.  THIS IS ASSUMING A 1-TO-1 RATIO
+      if (this.naturalWidth > this.width || this.naturalHeight > this.height) {
+        return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight;
+      }
+
       return w * this.quality;
     },
     outputHeight: function outputHeight() {
       var h = this.useAutoSizing ? this.realHeight : this.height;
+
+      // HACK FOR NOW.  THIS IS ASSUMING A 1-TO-1 RATIO
+      if (this.naturalHeight > this.height || this.naturalWidth > this.width) {
+        return this.naturalWidth > this.naturalHeight ? this.naturalWidth : this.naturalHeight;
+      }
+
       return h * this.quality;
     },
     computedPlaceholderFontSize: function computedPlaceholderFontSize() {
@@ -946,6 +958,9 @@ var component = { render: function render() {
     },
     emitNativeEvent: function emitNativeEvent(evt) {
       this.emitEvent(evt.type, evt);
+    },
+    setFile: function setFile(file) {
+      this._onNewFileIn(file);
     },
     _setContainerSize: function _setContainerSize() {
       if (this.useAutoSizing) {
