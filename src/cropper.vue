@@ -444,7 +444,6 @@ export default {
         callback(null)
         return
       }
-      console.log(this.canvas)
       this.canvas.toBlob(callback, mimeType, qualityArgument)
     },
 
