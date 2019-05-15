@@ -869,7 +869,6 @@ var component = { render: function render() {
         callback(null);
         return;
       }
-      console.log(this.canvas);
       this.canvas.toBlob(callback, mimeType, qualityArgument);
     },
     promisedBlob: function promisedBlob() {
