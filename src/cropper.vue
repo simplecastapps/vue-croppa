@@ -130,7 +130,7 @@ export default {
       const w = this.useAutoSizing ? this.realWidth : this.width
 
       // HACK
-      if (this.naturalWidth > this.width) {
+      if (this.naturalWidth > w) {
         return this.naturalWidth
       }
 
@@ -141,7 +141,7 @@ export default {
       const h = this.useAutoSizing ? this.realHeight : this.height
 
       // HACK
-      if (this.naturalWidth > this.width) {
+      if (this.naturalWidth > h) {
         return this.naturalWidth / this.width * this.height
       }
 
