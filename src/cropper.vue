@@ -129,9 +129,10 @@ export default {
     outputWidth () {
       const w = this.useAutoSizing ? this.realWidth : this.width
 
-      console.log('height', w)
       // HACK
-      if (this.naturalWidth > w) {
+      if (this.naturalWidth >= w) {
+        this._setRealSize()
+
         return this.naturalWidth
       }
 
@@ -140,10 +141,12 @@ export default {
 
     outputHeight () {
       const h = this.useAutoSizing ? this.realHeight : this.height
+      const w = this.useAutoSizing ? this.realWidth : this.width
 
-      console.log('height', h)
       // HACK
-      if (this.naturalWidth > h) {
+      if (this.naturalWidth >= w) {
+        this._setRealSize()
+
         return this.naturalWidth / this.width * this.height
       }
 
@@ -559,6 +562,7 @@ export default {
     _initialize () {
       this.canvas = this.$refs.canvas
       this._setSize()
+      this._setRealSize()
       this.canvas.style.backgroundColor = (!this.canvasColor || this.canvasColor == 'default') ? 'transparent' : (typeof this.canvasColor === 'string' ? this.canvasColor : '')
       this.ctx = this.canvas.getContext('2d')
       this.ctx.imageSmoothingEnabled = true;
@@ -580,6 +584,9 @@ export default {
     _setSize () {
       this.canvas.width = this.outputWidth
       this.canvas.height = this.outputHeight
+    },
+
+    _setRealSize () {
       this.canvas.style.width = (this.useAutoSizing ? this.realWidth : this.width) + 'px'
       this.canvas.style.height = (this.useAutoSizing ? this.realHeight : this.height) + 'px'
     },
@@ -1312,6 +1319,7 @@ export default {
           this.imageSet = false
         }
         this._setSize()
+        this._setRealSize()
         this._placeImage()
       }
     }

@@ -561,7 +561,9 @@ var component = { render: function render() {
       var w = this.useAutoSizing ? this.realWidth : this.width;
 
       // HACK
-      if (this.naturalWidth > this.width) {
+      if (this.naturalWidth >= w) {
+        this._setRealSize();
+
         return this.naturalWidth;
       }
 
@@ -569,9 +571,12 @@ var component = { render: function render() {
     },
     outputHeight: function outputHeight() {
       var h = this.useAutoSizing ? this.realHeight : this.height;
+      var w = this.useAutoSizing ? this.realWidth : this.width;
 
       // HACK
-      if (this.naturalWidth > this.width) {
+      if (this.naturalWidth >= w) {
+        this._setRealSize();
+
         return this.naturalWidth / this.width * this.height;
       }
 
@@ -979,6 +984,7 @@ var component = { render: function render() {
     _initialize: function _initialize() {
       this.canvas = this.$refs.canvas;
       this._setSize();
+      this._setRealSize();
       this.canvas.style.backgroundColor = !this.canvasColor || this.canvasColor == 'default' ? 'transparent' : typeof this.canvasColor === 'string' ? this.canvasColor : '';
       this.ctx = this.canvas.getContext('2d');
       this.ctx.imageSmoothingEnabled = true;
@@ -999,6 +1005,8 @@ var component = { render: function render() {
     _setSize: function _setSize() {
       this.canvas.width = this.outputWidth;
       this.canvas.height = this.outputHeight;
+    },
+    _setRealSize: function _setRealSize() {
       this.canvas.style.width = (this.useAutoSizing ? this.realWidth : this.width) + 'px';
       this.canvas.style.height = (this.useAutoSizing ? this.realHeight : this.height) + 'px';
     },
@@ -1734,6 +1742,7 @@ var component = { render: function render() {
           this.imageSet = false;
         }
         this._setSize();
+        this._setRealSize();
         this._placeImage();
       }
     }
